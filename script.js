@@ -6,8 +6,10 @@ const altImg =
   "https://imageio.forbes.com/specials-images/imageserve/64a98d6cca67efc5164c321a/0x0.jpg?format=jpg&width=1200";
 const optionsDiv = document.querySelector(".main-nav");
 const articlesContainer = document.querySelector(".art-container");
+const searcher = document.getElementById('search-text')
+let activeTab;
+let activeCategory;
 const pagesDiv = document.querySelector(".pages");
-const searcher = document.getElementById("search-text");
 const next = document.getElementById("next");
 const prev = document.getElementById("prev");
 
@@ -102,6 +104,10 @@ function selectCategory(e, category) {
   options.forEach((option) => option.classList.remove("active"));
   requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`;
   e.target.classList.add("active");
+  activeTab = e.target
+  activeCategory=category;
+  // console.log(activeCategory)
+  // console.log(activeTab)
   getNews();
 }
 function generateOptions() {
@@ -116,88 +122,64 @@ function generateOptions() {
   }
 }
 
-searcher.addEventListener("input", updateValue);
-
-function updateValue(e) {
-  let searchedText = e.target.value;
-  searchedText = searchedText.toLowerCase();
-
-  if (
-    searchedText == "in" ||
-    searchedText == "eg" ||
-    searchedText == "us" ||
-    searchedText == "br"
-  ) {
-    requestURL = `https://newsapi.org/v2/top-headlines?country=${searchedText}&category=general&apiKey=${apiKey}`;
-    getNews();
-    console.log("API CALLED");
-    return;
-  }
-  if (searchedText.length >= 6) {
-    requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${searchedText}&apiKey=${apiKey}`;
-    getNews();
-    console.log("API CALLED");
-    return;
-  }
-}
-next.addEventListener("click", nextClick);
-function nextClick(e) {
-  let pages = document.querySelectorAll(".page");
-  let active = document.querySelector(".pages .active");
-  let numPages = pages.length;
-  if (parseInt(active.value) === numPages) {
-    return;
-  }
-
-  pages.forEach((page) => page.classList.remove("active"));
-  pages.forEach((page) => {
-    if (parseInt(page.value) === parseInt(active.value) + 1) {
-      page.classList.add("active");
-    }
-  });
-  active = document.querySelector(".pages .active");
-  if (parseInt(active.value) === numPages) {
-    let article12 = data.articles.slice((parseInt(active.value) - 1) * 12);
-    generateUI(article12);
-  }
-  let article12 = data.articles.slice(
-    (parseInt(active.value) - 1) * 12,
-    parseInt(active.value) * 12
-  );
-  generateUI(article12);
-}
-prev.addEventListener("click", prevClick);
-function prevClick(e) {
-  let pages = document.querySelectorAll(".page");
-  let active = document.querySelector(".pages .active");
-  let numPages = pages.length;
-  if (parseInt(active.value) === 1) {
-    return;
-  }
-
-  pages.forEach((page) => page.classList.remove("active"));
-  pages.forEach((page) => {
-    if (parseInt(page.value) === parseInt(active.value) - 1) {
-      page.classList.add("active");
-    }
-  });
-  active = document.querySelector(".pages .active");
-  if (parseInt(active.value) === numPages) {
-    let article12 = data.articles.slice((parseInt(active.value) - 1) * 12);
-    generateUI(article12);
-  }
-  let article12 = data.articles.slice(
-    (parseInt(active.value) - 1) * 12,
-    parseInt(active.value) * 12
-  );
-  generateUI(article12);
-}
-
 function init() {
-  getNews();
+  // getNews();
   generateOptions();
 }
 window.onload = () => {
   requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=general&apiKey=${apiKey}`;
   init();
 };
+
+
+
+
+
+
+//////////
+/////////
+// SEARCH
+
+console.log(searcher)
+
+searcher.addEventListener("input", updateValue);
+
+function updateValue(e) {
+  let searchedText = e.target.value
+  searchedText = searchedText.toLowerCase()
+  let removeactive = document.querySelectorAll(".option")
+  
+  if(searchedText=="in" || searchedText=="eg" || searchedText=="us" || searchedText=="br"){
+    requestURL = `https://newsapi.org/v2/top-headlines?country=${searchedText}&category=general&apiKey=${apiKey}`;
+    getNews()
+    removeactive.forEach((option) => option.classList.remove("active"));
+    console.log("API CALLED")
+    return
+  }
+  else if(searchedText=="business" || searchedText=="entertainment" || searchedText=="general" || searchedText=="health" || searchedText=="science"|| searchedText=="sports"|| searchedText=="technology"){
+    requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${searchedText}&apiKey=${apiKey}`
+    getNews()
+    removeactive.forEach((option) => option.classList.remove("active"));
+    console.log("API CALLED")
+    return
+  }else if(searchedText==""){
+    activeTab.classList.add("active")
+    requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${activeCategory}&apiKey=${apiKey}`;
+    getNews()
+    console.log("Back to default")
+    return
+  }else{
+    requestURL = `https://newsapi.org/v2/top-headlines?q=${searchedText}&country=${country}&category=general&apiKey=${apiKey}`;
+    getNews()
+    removeactive.forEach((option) => option.classList.remove("active"));
+    console.log("API CALLED")
+  }
+  
+}
+//business entertainment general health science sports technology
+
+
+////////////////
+///////////////
+///// SORT
+
