@@ -41,6 +41,58 @@ async function getNews() {
     generateUI(article12);
   }
 }
+next.addEventListener("click", nextClick);
+function nextClick(e) {
+  let pages = document.querySelectorAll(".page");
+  let active = document.querySelector(".pages .active");
+  let numPages = pages.length;
+  if (parseInt(active.value) === numPages) {
+    return;
+  }
+
+  pages.forEach((page) => page.classList.remove("active"));
+  pages.forEach((page) => {
+    if (parseInt(page.value) === parseInt(active.value) + 1) {
+      page.classList.add("active");
+    }
+  });
+  active = document.querySelector(".pages .active");
+  if (parseInt(active.value) === numPages) {
+    let article12 = data.articles.slice((parseInt(active.value) - 1) * 12);
+    generateUI(article12);
+  }
+  let article12 = data.articles.slice(
+    (parseInt(active.value) - 1) * 12,
+    parseInt(active.value) * 12
+  );
+  generateUI(article12);
+}
+prev.addEventListener("click", prevClick);
+function prevClick(e) {
+  let pages = document.querySelectorAll(".page");
+  let active = document.querySelector(".pages .active");
+  let numPages = pages.length;
+  if (parseInt(active.value) === 1) {
+    return;
+  }
+
+  pages.forEach((page) => page.classList.remove("active"));
+  pages.forEach((page) => {
+    if (parseInt(page.value) === parseInt(active.value) - 1) {
+      page.classList.add("active");
+    }
+  });
+  active = document.querySelector(".pages .active");
+  if (parseInt(active.value) === numPages) {
+    let article12 = data.articles.slice((parseInt(active.value) - 1) * 12);
+    generateUI(article12);
+  }
+  let article12 = data.articles.slice(
+    (parseInt(active.value) - 1) * 12,
+    parseInt(active.value) * 12
+  );
+  generateUI(article12);
+}
 
 function generateUI(articles) {
   articlesContainer.innerHTML = "";
@@ -120,10 +172,13 @@ function generateOptions() {
     `;
     optionsDiv.append(listItem);
   }
+  activeTab=(document.querySelectorAll(".main-nav li button")[0])
+  activeCategory="general"
+
 }
 
 function init() {
-  // getNews();
+  getNews();
   generateOptions();
 }
 window.onload = () => {
