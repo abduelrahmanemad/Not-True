@@ -421,7 +421,7 @@ header .links ul li:not(:last-child) a {
 }
 .articles .container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(25rem, 2fr));
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 2fr));
   gap: 4rem;
 }
 @media (max-width: 670px) {
@@ -493,7 +493,10 @@ header .links ul li:not(:last-child) a {
   display: flex;
   gap: 1rem;
 }
-.pagination .container li a {
+.pagination .container li button {
+  cursor: pointer;
+  outline: none;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -504,7 +507,11 @@ header .links ul li:not(:last-child) a {
   border-radius: 50%;
   transition: var(--main-transition);
 }
-.pagination .container li a:hover {
+.pagination .container .active {
+  background-color: var(--main-color);
+  color: white;
+}
+.pagination .container li button:hover {
   background-color: var(--main-color);
   color: #fff;
 }

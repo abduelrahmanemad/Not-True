@@ -20,7 +20,7 @@
         <a href="#" class="logo">Not True</a>
         <ul class="main-nav">
         </ul>
-        <input class="search" type="text" placeholder="search" />
+        <input class="search" id="search-text" type="text" placeholder="search" />
         <div class="group">
           <button class="search-button" type="button">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -66,22 +66,9 @@
     </div>
     <div class="pagination">
       <div class="container">
-        <button class="page-btn"><i class="fas fa-long-arrow-alt-left"></i></i>Prev.</button>
-        <ul>
-          <li>
-            <a href="#" value="1">1</a>
-          </li>
-          <li>
-            <a href="#" value="2">2</a>
-          </li>
-          <li>
-            <a href="#" value="3">3</a>
-          </li>
-          <li>
-            <a href="#" value="4">4</a>
-          </li>
-        </ul>
-        <button class="page-btn">Next<i class="fas fa-long-arrow-alt-right"></i></button>
+        <a href="#"><button class="page-btn" id="prev"><i class="fas fa-long-arrow-alt-left"></i></i>Prev.</button></a>
+        <ul class="pages"></ul>
+        <a href="#"><button class="page-btn" id="next">Next<i class="fas fa-long-arrow-alt-right"></i></button></a>
       </div>
     </div>
     <script src="script.js"></script>
