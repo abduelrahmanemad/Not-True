@@ -1,5 +1,5 @@
 // img url https://imageio.forbes.com/specials-images/imageserve/64a98d6cca67efc5164c321a/0x0.jpg?format=jpg&width=1200
-const options = ["general", "tech", "business", "health", "science"];
+const options = ["general", "technology", "business", "health", "science"];
 const country = "us";
 const apiKey = "aadf05920b4747dda79eecd8010a46d9";
 const altImg =
@@ -49,7 +49,7 @@ function selectCategory(e, category) {
   let options = document.querySelectorAll(".option");
   options.forEach((option) => option.classList.remove("active"));
   requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`;
-  e.target.classList.add(".active");
+  e.target.classList.add("active");
   getNews();
 }
 function generateOptions() {
@@ -58,7 +58,7 @@ function generateOptions() {
     listItem.innerHTML = `
     <button class="option ${
       option == "general" ? "active" : ""
-    }" onclick="selectCategory(event, ${option})">${option}</button>
+    }" onclick="selectCategory(event, '${option}')">${option}</button>
     `;
     optionsDiv.append(listItem);
   }
@@ -66,11 +66,9 @@ function generateOptions() {
 
 function init() {
   getNews();
-  createOptions();
+  generateOptions();
 }
 window.onload = () => {
   requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=general&apiKey=${apiKey}`;
   init();
-  console.log("hi");
 };
-generateOptions();
