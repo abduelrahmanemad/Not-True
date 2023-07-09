@@ -6,17 +6,15 @@ const altImg =
   "https://imageio.forbes.com/specials-images/imageserve/64a98d6cca67efc5164c321a/0x0.jpg?format=jpg&width=1200";
 const optionsDiv = document.querySelector(".main-nav");
 const articlesContainer = document.querySelector(".art-container");
-const searcher = document.getElementById('search-text')
-let activeTab;
-let activeCategory;
+const searcher = document.getElementById("search-text");
 const pagesDiv = document.querySelector(".pages");
 const next = document.getElementById("next");
 const prev = document.getElementById("prev");
 
+let activeTab;
+let activeCategory;
 let requestURL;
-
 let numPages = 0;
-
 let data;
 
 async function getNews() {
@@ -98,9 +96,10 @@ function generateUI(articles) {
   articlesContainer.innerHTML = "";
   for (let article of articles) {
     let box = document.createElement("div");
+    let author = article.author ? article.author : "Unknown Author";
     box.classList.add("box");
     box.innerHTML = `<img
-            src="${article.urlToImage}||${altImg}"
+            src="${article.urlToImage || altImg}"
             alt="img-of-article"
           />
           <div class="content">
@@ -110,9 +109,9 @@ function generateUI(articles) {
             <p>
               ${article.description}
             </p>
-            <p><span>
-              ${article.author}
-            </span></p>
+            <div><span>
+              ${author}
+            </span></div>
           </div>
           <div class="info">
             <a href="${article.url}">Read More</a>
@@ -156,8 +155,8 @@ function selectCategory(e, category) {
   options.forEach((option) => option.classList.remove("active"));
   requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`;
   e.target.classList.add("active");
-  activeTab = e.target
-  activeCategory=category;
+  activeTab = e.target;
+  activeCategory = category;
   // console.log(activeCategory)
   // console.log(activeTab)
   getNews();
@@ -172,9 +171,8 @@ function generateOptions() {
     `;
     optionsDiv.append(listItem);
   }
-  activeTab=(document.querySelectorAll(".main-nav li button")[0])
-  activeCategory="general"
-
+  activeTab = document.querySelectorAll(".main-nav li button")[0];
+  activeCategory = "general";
 }
 
 function init() {
@@ -186,55 +184,59 @@ window.onload = () => {
   init();
 };
 
-
-
-
-
-
 //////////
 /////////
 // SEARCH
 
-console.log(searcher)
+console.log(searcher);
 
 searcher.addEventListener("input", updateValue);
 
 function updateValue(e) {
-  let searchedText = e.target.value
-  searchedText = searchedText.toLowerCase()
-  let removeactive = document.querySelectorAll(".option")
-  
-  if(searchedText=="in" || searchedText=="eg" || searchedText=="us" || searchedText=="br"){
+  let searchedText = e.target.value;
+  searchedText = searchedText.toLowerCase();
+  let removeactive = document.querySelectorAll(".option");
+
+  if (
+    searchedText == "in" ||
+    searchedText == "eg" ||
+    searchedText == "us" ||
+    searchedText == "br"
+  ) {
     requestURL = `https://newsapi.org/v2/top-headlines?country=${searchedText}&category=general&apiKey=${apiKey}`;
-    getNews()
+    getNews();
     removeactive.forEach((option) => option.classList.remove("active"));
-    console.log("API CALLED")
-    return
-  }
-  else if(searchedText=="business" || searchedText=="entertainment" || searchedText=="general" || searchedText=="health" || searchedText=="science"|| searchedText=="sports"|| searchedText=="technology"){
-    requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${searchedText}&apiKey=${apiKey}`
-    getNews()
+    console.log("API CALLED");
+    return;
+  } else if (
+    searchedText == "business" ||
+    searchedText == "entertainment" ||
+    searchedText == "general" ||
+    searchedText == "health" ||
+    searchedText == "science" ||
+    searchedText == "sports" ||
+    searchedText == "technology"
+  ) {
+    requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${searchedText}&apiKey=${apiKey}`;
+    getNews();
     removeactive.forEach((option) => option.classList.remove("active"));
-    console.log("API CALLED")
-    return
-  }else if(searchedText==""){
-    activeTab.classList.add("active")
+    console.log("API CALLED");
+    return;
+  } else if (searchedText == "") {
+    activeTab.classList.add("active");
     requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${activeCategory}&apiKey=${apiKey}`;
-    getNews()
-    console.log("Back to default")
-    return
-  }else{
+    getNews();
+    console.log("Back to default");
+    return;
+  } else {
     requestURL = `https://newsapi.org/v2/top-headlines?q=${searchedText}&country=${country}&category=general&apiKey=${apiKey}`;
-    getNews()
+    getNews();
     removeactive.forEach((option) => option.classList.remove("active"));
-    console.log("API CALLED")
+    console.log("API CALLED");
   }
-  
 }
 //business entertainment general health science sports technology
-
 
 ////////////////
 ///////////////
 ///// SORT
-

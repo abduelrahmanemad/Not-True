@@ -437,6 +437,8 @@ header .links ul li:not(:last-child) a {
   overflow: hidden;
   transition: transform var(--main-transition),
     box-shadow var(--main-transition);
+  display: flex;
+  flex-direction: column;
 }
 .articles .box:hover {
   transform: translateY(-10px);
@@ -448,16 +450,32 @@ header .links ul li:not(:last-child) a {
 }
 .articles .box .content {
   padding: 2rem;
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  gap: 1.5rem;
 }
 .articles .box .content h3 {
   margin: 0;
   font-size: 2rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
 .articles .box .content p {
   margin: 1rem 0 0;
   line-height: 1.5;
   color: #434343;
   font-size: 1.5rem;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 .articles .box .info {
   padding: 20px;
@@ -465,6 +483,7 @@ header .links ul li:not(:last-child) a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-height: 58rem;
 }
 .articles .box .info a {
   color: var(--main-color);
