@@ -263,10 +263,16 @@ function updateValue(e) {
 }
 
 searchbtn_sm.addEventListener("click",(e)=>{
+  if(searcher.style.display=="inline-block"){
+    searcher.style.display="none"
+  }else{
+    searcher.style.display="inline-block";
+    let nav_main = document.querySelector(".main-nav")
+    nav_main.style.display="none"
+  }
+ 
   
-  let nav_main = document.querySelector(".main-nav")
-  nav_main.innerHTML="";
-  searcher.style.display="inline-block";
+  
   
 
 
