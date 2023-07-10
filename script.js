@@ -1,7 +1,7 @@
 // img url https://imageio.forbes.com/specials-images/imageserve/64a98d6cca67efc5164c321a/0x0.jpg?format=jpg&width=1200
 const options = ["general", "technology", "business", "health", "science"];
 const country = "us";
-const apiKey = "7a344b4996f4461f99707dae0fc1a80a";
+const apiKey = "aadf05920b4747dda79eecd8010a46d9";
 const altImg =
   "https://imageio.forbes.com/specials-images/imageserve/64a98d6cca67efc5164c321a/0x0.jpg?format=jpg&width=1200";
 const optionsDiv = document.querySelector(".main-nav");
