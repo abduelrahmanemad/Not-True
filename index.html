@@ -46,15 +46,15 @@
       <div class="container">
         <div class="l-group">
           <h3>Sort by:</h3>
-          <button class="sort-btn" type="button">Published date</button>
-          <button class="sort-btn" type="button">Relativity</button>
-          <button class="sort-btn" type="button">Popularity of source</button>
+          <button  class="sort-btn" type="button" onclick="sortClick(event, 'publishedAt')">Published date</button>
+          <!-- <button class="sort-btn" type="button">Relativity</button> -->
+          <button class="sort-btn" type="button" onclick="sortClick(event, 'popularity')">Popularity of source</button>
         </div>
         <div class="s-group">
           <h3>Sort by:</h3>
           <select name="sort" id="ahmed">
-            <option value="published">Published date</option>
-            <option value="relativity">Relativity</option>
+            <option value="publishedAt">Published date</option>
+            <!-- <option value="relativity">Relativity</option> -->
             <option value="popularity">Popularity of source</option>
           </select>
         </div>

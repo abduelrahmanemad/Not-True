@@ -10,12 +10,18 @@ const searcher = document.getElementById("search-text");
 const pagesDiv = document.querySelector(".pages");
 const next = document.getElementById("next");
 const prev = document.getElementById("prev");
+const sortBtns = document.querySelectorAll(".sort-btn");
 
 let activeTab;
 let activeCategory;
 let requestURL;
 let numPages = 0;
 let data;
+let activeSort;
+
+next.addEventListener("click", nextClick);
+prev.addEventListener("click", prevClick);
+searcher.addEventListener("input", updateValue);
 
 async function getNews() {
   articlesContainer.innerHTML = "";
@@ -39,7 +45,6 @@ async function getNews() {
     generateUI(article12);
   }
 }
-next.addEventListener("click", nextClick);
 function nextClick(e) {
   let pages = document.querySelectorAll(".page");
   let active = document.querySelector(".pages .active");
@@ -65,7 +70,6 @@ function nextClick(e) {
   );
   generateUI(article12);
 }
-prev.addEventListener("click", prevClick);
 function prevClick(e) {
   let pages = document.querySelectorAll(".page");
   let active = document.querySelector(".pages .active");
@@ -190,8 +194,6 @@ window.onload = () => {
 
 console.log(searcher);
 
-searcher.addEventListener("input", updateValue);
-
 function updateValue(e) {
   let searchedText = e.target.value;
   searchedText = searchedText.toLowerCase();
@@ -240,3 +242,17 @@ function updateValue(e) {
 ////////////////
 ///////////////
 ///// SORT
+function sortClick(e, sort) {
+  const activeSort = document.querySelector(".sorting .active");
+  const clickedButton = e.target;
+
+  if (activeSort === clickedButton) {
+    clickedButton.classList.remove("active");
+    requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${activeCategory}&apiKey=${apiKey}`;
+  } else {
+    sortBtns.forEach((btn) => btn.classList.remove("active"));
+    clickedButton.classList.add("active");
+    requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${activeCategory}&sortBy=${sort}&apiKey=${apiKey}`;
+  }
+  getNews();
+}
