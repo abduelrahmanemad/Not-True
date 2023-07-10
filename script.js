@@ -12,6 +12,7 @@ const pagesDiv = document.querySelector(".pages");
 const next = document.getElementById("next");
 const prev = document.getElementById("prev");
 const sortBtns = document.querySelectorAll(".sort-btn");
+const searchbtn_sm = document.querySelector(".search-button")
 
 let activeTab;
 let activeCategory;
@@ -27,6 +28,7 @@ searcher.addEventListener("input", updateValue);
 async function getNews() {
   articlesContainer.innerHTML = "";
   pagesDiv.innerHTML = "";
+  console.log(requestURL)
   let response = await fetch(requestURL);
   if (!response.ok) {
     alert("Data unavailabel");
@@ -259,6 +261,17 @@ function updateValue(e) {
     console.log("API CALLED");
   }
 }
+
+searchbtn_sm.addEventListener("click",(e)=>{
+  
+  let nav_main = document.querySelector(".main-nav")
+  nav_main.innerHTML="";
+  searcher.style.display="inline-block";
+  
+
+
+})
+
 //business entertainment general health science sports technology
 
 ////////////////
@@ -267,6 +280,8 @@ function updateValue(e) {
 function sortClick(e, sort) {
   const activeSort = document.querySelector(".sorting .active");
   const clickedButton = e.target;
+  console.log(activeSort)
+  console.log(clickedButton)
 
   if (activeSort === clickedButton) {
     clickedButton.classList.remove("active");

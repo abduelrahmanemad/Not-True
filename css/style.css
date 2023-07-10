@@ -96,6 +96,8 @@ ul {
   fill: #06f;
 }
 
+
+
 @media (min-width: 768px) {
   .search-button {
     min-width: 1.7rem;
@@ -191,6 +193,7 @@ header .logo {
   header .logo {
     font-size: 2.3rem;
   }
+
 }
 header .container .main-nav {
   display: flex;
@@ -378,6 +381,15 @@ header .links ul li:not(:last-child) button {
 .option {
   text-transform: capitalize;
 }
+
+@media (max-width: 565px) {
+ .search{
+  max-width: 25% !important;
+ }
+
+}
+
+
 /* END Header */
 /* //////////////////////////////////////////// */
 /* //////////////////////////////////////////// */
