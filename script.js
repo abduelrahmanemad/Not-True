@@ -5,6 +5,7 @@ const apiKey = "aadf05920b4747dda79eecd8010a46d9";
 const altImg =
   "https://imageio.forbes.com/specials-images/imageserve/64a98d6cca67efc5164c321a/0x0.jpg?format=jpg&width=1200";
 const optionsDiv = document.querySelector(".main-nav");
+const optionsDivSmall = document.querySelector(".mini-menu");
 const articlesContainer = document.querySelector(".art-container");
 const searcher = document.getElementById("search-text");
 const pagesDiv = document.querySelector(".pages");
@@ -98,30 +99,24 @@ function prevClick(e) {
 
 function generateUI(articles) {
   articlesContainer.innerHTML = "";
+
   for (let article of articles) {
     let box = document.createElement("div");
     let author = article.author ? article.author : "Unknown Author";
     box.classList.add("box");
-    box.innerHTML = `<img
-            src="${article.urlToImage || altImg}"
-            alt="img-of-article"
-          />
+    box.innerHTML = `<img src="${
+      article.urlToImage || altImg
+    }" alt="img-of-article" onerror="this.src='${altImg}'"/>
           <div class="content">
-            <h3>
-              ${article.title}
-            </h3>
-            <p>
-              ${article.description}
-            </p>
-            <div><span>
-              ${author}
-            </span></div>
+            <h3>${article.title}</h3>
+            <p>${article.description}</p>
+            <div><span>${author}</span></div>
           </div>
           <div class="info">
             <a href="${article.url}">Read More</a>
             <i class="fas fa-long-arrow-alt-right"></i>
-          </div>
-            `;
+          </div>`;
+
     articlesContainer.append(box);
   }
 }
@@ -179,9 +174,36 @@ function generateOptions() {
   activeCategory = "general";
 }
 
+function generateOptionsSmall() {
+  for (let option of options) {
+    let listItem = document.createElement("li");
+    listItem.innerHTML = `
+    <button class="sOption ${
+      option == "general" ? "active" : ""
+    }" onclick="selectCategorySmall(event, '${option}')">${option}</button>
+    `;
+    optionsDivSmall.append(listItem);
+  }
+  // activeTab = document.querySelectorAll(".mini-menu li button")[0];
+  // activeTab = document.querySelectorAll(".main-nav li button")[0];
+  activeCategory = "general";
+}
+function selectCategorySmall(e, category) {
+  let options = document.querySelectorAll(".sOption");
+  options.forEach((option) => option.classList.remove("active"));
+  requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`;
+  e.target.classList.add("active");
+  activeTab = e.target;
+  activeCategory = category;
+  console.log("bitch");
+  // console.log(activeCategory)
+  // console.log(activeTab)
+  getNews();
+}
 function init() {
   getNews();
   generateOptions();
+  generateOptionsSmall();
 }
 window.onload = () => {
   requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=general&apiKey=${apiKey}`;

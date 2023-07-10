@@ -346,7 +346,13 @@ header .links ul::before {
 header .links:hover ul {
   display: block;
 }
-header .links ul li a {
+header .links ul li .active {
+  color: var(--main-color);
+}
+header .links ul li button {
+  text-align: left;
+  outline: none;
+  border: none;
   display: block;
   padding: 15px;
   text-decoration: none;
@@ -354,11 +360,13 @@ header .links ul li a {
   transition: var(--main-duration);
   font-size: 1.6rem;
   font-weight: 500;
+  margin: 0;
+  width: 100%;
 }
-header .links ul li a:hover {
+header .links ul li button:hover {
   padding-left: 25px;
 }
-header .links ul li:not(:last-child) a {
+header .links ul li:not(:last-child) button {
   border-bottom: 1px solid #ddd;
 }
 .group {
