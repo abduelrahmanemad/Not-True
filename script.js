@@ -13,11 +13,6 @@ const next = document.getElementById("next");
 const prev = document.getElementById("prev");
 const sortBtns = document.querySelectorAll(".sort-btn");
 const searchbtn_sm = document.querySelector(".search-button")
-const optionsMinWinSize = window.matchMedia("(max-width: 995px)");
-const searchButtonWin = window.matchMedia("(min-width: 620px)");
-const minOptionWinSize= window.matchMedia("(min-width: 995px)");
-const maxwidthMenu = window.matchMedia("(max-width: 620px)");
-
 
 let activeTab;
 let activeCategory;
@@ -33,7 +28,7 @@ searcher.addEventListener("input", updateValue);
 async function getNews() {
   articlesContainer.innerHTML = "";
   pagesDiv.innerHTML = "";
-  console.log(requestURL)
+  console.log(requestURL);
   let response = await fetch(requestURL);
   if (!response.ok) {
     alert("Data unavailabel");
@@ -266,56 +261,21 @@ function updateValue(e) {
   }
 }
 
-
-searchbtn_sm.addEventListener("click",searchButtonClicked);
-
-function searchButtonClicked(){
-  
-
-  if(searcher.style.display=="block"){
+searchbtn_sm.addEventListener("click",(e)=>{
+  if(searcher.style.display=="inline-block"){
     searcher.style.display="none"
   }else{
-    searcher.style.display="block";
+    searcher.style.display="inline-block";
+    let nav_main = document.querySelector(".main-nav")
+    nav_main.style.display="none"
   }
-
-  if(optionsMinWinSize.matches && searchButtonWin.matches){
-    if(optionsDiv.style.display=="none"){
-      optionsDiv.style.display="flex";
-      
-    }else{
-      optionsDiv.style.display="none";
-      
-    }
-
-  }
-  
-}
-
-
-
-
-
-
-
-
-
-
-
-// searchbtn_sm.addEventListener("click",(e)=>{
-//   if(searcher.style.display=="inline-block"){
-//     searcher.style.display="none"
-//   }else{
-//     searcher.style.display="inline-block";
-//     let nav_main = document.querySelector(".main-nav")
-//     nav_main.style.display="none"
-//   }
  
   
   
   
 
 
-// })
+})
 
 //business entertainment general health science sports technology
 
@@ -325,8 +285,8 @@ function searchButtonClicked(){
 function sortClick(e, sort) {
   const activeSort = document.querySelector(".sorting .active");
   const clickedButton = e.target;
-  console.log(activeSort)
-  console.log(clickedButton)
+  console.log(activeSort);
+  console.log(clickedButton);
 
   if (activeSort === clickedButton) {
     clickedButton.classList.remove("active");
