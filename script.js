@@ -13,6 +13,11 @@ const next = document.getElementById("next");
 const prev = document.getElementById("prev");
 const sortBtns = document.querySelectorAll(".sort-btn");
 const searchbtn_sm = document.querySelector(".search-button")
+const optionsMinWinSize = window.matchMedia("(max-width: 995px)");
+const searchButtonWin = window.matchMedia("(min-width: 620px)");
+const minOptionWinSize= window.matchMedia("(min-width: 995px)");
+const maxwidthMenu = window.matchMedia("(max-width: 620px)");
+
 
 let activeTab;
 let activeCategory;
@@ -197,7 +202,6 @@ function selectCategorySmall(e, category) {
   e.target.classList.add("active");
   activeTab = e.target;
   activeCategory = category;
-  console.log("bitch");
   // console.log(activeCategory)
   // console.log(activeTab)
   getNews();
@@ -262,21 +266,56 @@ function updateValue(e) {
   }
 }
 
-searchbtn_sm.addEventListener("click",(e)=>{
-  if(searcher.style.display=="inline-block"){
+
+searchbtn_sm.addEventListener("click",searchButtonClicked);
+
+function searchButtonClicked(){
+  
+
+  if(searcher.style.display=="block"){
     searcher.style.display="none"
   }else{
-    searcher.style.display="inline-block";
-    let nav_main = document.querySelector(".main-nav")
-    nav_main.style.display="none"
+    searcher.style.display="block";
   }
+
+  if(optionsMinWinSize.matches && searchButtonWin.matches){
+    if(optionsDiv.style.display=="none"){
+      optionsDiv.style.display="flex";
+      
+    }else{
+      optionsDiv.style.display="none";
+      
+    }
+
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+// searchbtn_sm.addEventListener("click",(e)=>{
+//   if(searcher.style.display=="inline-block"){
+//     searcher.style.display="none"
+//   }else{
+//     searcher.style.display="inline-block";
+//     let nav_main = document.querySelector(".main-nav")
+//     nav_main.style.display="none"
+//   }
  
   
   
   
 
 
-})
+// })
 
 //business entertainment general health science sports technology
 
@@ -298,4 +337,42 @@ function sortClick(e, sort) {
     requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${activeCategory}&sortBy=${sort}&apiKey=${apiKey}`;
   }
   getNews();
+}
+
+const selectElement = document.getElementById("ahmed");
+  selectElement.addEventListener("change", function () {
+  const selectedValue = this.value;
+  const activeSort = document.querySelector(".sorting .active");
+
+  if (activeSort) {
+    activeSort.classList.remove("active");
+  }
+
+  requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${activeCategory}&sortBy=${selectedValue}&apiKey=${apiKey}`;
+  getNews();
+});
+
+
+
+
+///////
+//////
+//Window
+
+window.addEventListener('resize', menuVisibilization);
+
+function menuVisibilization(){
+ 
+  if(minOptionWinSize.matches){
+    optionsDiv.style.display="flex"
+    searcher.style.display="block"
+  }
+  if(optionsMinWinSize.matches){
+    optionsDiv.style.display="flex"
+    searcher.style.display="none"
+  }
+  if(maxwidthMenu.matches){
+    optionsDiv.style.display="none"
+  }
+
 }
