@@ -12,8 +12,8 @@ const pagesDiv = document.querySelector(".pages");
 const next = document.getElementById("next");
 const prev = document.getElementById("prev");
 const sortBtns = document.querySelectorAll(".sort-btn");
-const searchbtn_sm = document.querySelector(".search-button")
-
+const searchbtn_sm = document.querySelector(".search-button");
+const smallMenu = document.querySelector(".links");
 let activeTab;
 let activeCategory;
 let requestURL;
@@ -28,7 +28,7 @@ searcher.addEventListener("input", updateValue);
 async function getNews() {
   articlesContainer.innerHTML = "";
   pagesDiv.innerHTML = "";
-  console.log(requestURL)
+  console.log(requestURL);
   let response = await fetch(requestURL);
   if (!response.ok) {
     alert("Data unavailabel");
@@ -262,21 +262,29 @@ function updateValue(e) {
   }
 }
 
-searchbtn_sm.addEventListener("click",(e)=>{
-  if(searcher.style.display=="inline-block"){
-    searcher.style.display="none"
-  }else{
-    searcher.style.display="inline-block";
-    let nav_main = document.querySelector(".main-nav")
-    nav_main.style.display="none"
+searchbtn_sm.addEventListener("click", (e) => {
+  if (smallMenu.style.display === "none") {
+    if (searcher.style.display === "inline-block") {
+      searcher.style.display = "none";
+      optionsDiv.style.display = "flex";
+    } else {
+      searcher.style.display = "inline-block";
+      optionsDiv.style.display = "none";
+    }
+  } else {
+    if (searcher.style.display === "inline-block") {
+      searcher.style.display = "none";
+    } else {
+      searcher.style.display = "inline-block";
+    }
   }
- 
-  
-  
-  
 
-
-})
+  if (smallMenu.style.display === "none") {
+    optionsDivSmall.style.display = "none";
+  } else {
+    optionsDivSmall.style.display = "block";
+  }
+});
 
 //business entertainment general health science sports technology
 
@@ -286,8 +294,8 @@ searchbtn_sm.addEventListener("click",(e)=>{
 function sortClick(e, sort) {
   const activeSort = document.querySelector(".sorting .active");
   const clickedButton = e.target;
-  console.log(activeSort)
-  console.log(clickedButton)
+  console.log(activeSort);
+  console.log(clickedButton);
 
   if (activeSort === clickedButton) {
     clickedButton.classList.remove("active");
