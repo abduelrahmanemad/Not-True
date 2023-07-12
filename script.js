@@ -1,9 +1,19 @@
-// img url https://imageio.forbes.com/specials-images/imageserve/64a98d6cca67efc5164c321a/0x0.jpg?format=jpg&width=1200
+// Image URL
+const imgUrl =
+  "https://imageio.forbes.com/specials-images/imageserve/64a98d6cca67efc5164c321a/0x0.jpg?format=jpg&width=1200";
+
+// News categories
 const options = ["general", "technology", "business", "health", "science"];
+
+// API configuration
 const country = "us";
 const apiKey = "aadf05920b4747dda79eecd8010a46d9";
+
+// Alternative image URL
 const altImg =
   "https://imageio.forbes.com/specials-images/imageserve/64a98d6cca67efc5164c321a/0x0.jpg?format=jpg&width=1200";
+
+// DOM elements
 const optionsDiv = document.querySelector(".main-nav");
 const optionsDivSmall = document.querySelector(".mini-menu");
 const articlesContainer = document.querySelector(".art-container");
@@ -12,13 +22,15 @@ const pagesDiv = document.querySelector(".pages");
 const next = document.getElementById("next");
 const prev = document.getElementById("prev");
 const sortBtns = document.querySelectorAll(".sort-btn");
-const searchbtn_sm = document.querySelector(".search-button")
+const searchbtn_sm = document.querySelector(".search-button");
+
+// Media queries
 const optionsMinWinSize = window.matchMedia("(max-width: 995px)");
 const searchButtonWin = window.matchMedia("(min-width: 620px)");
-const minOptionWinSize= window.matchMedia("(min-width: 995px)");
+const minOptionWinSize = window.matchMedia("(min-width: 995px)");
 const maxwidthMenu = window.matchMedia("(max-width: 620px)");
 
-
+// Variables
 let activeTab;
 let activeCategory;
 let requestURL;
@@ -26,17 +38,21 @@ let numPages = 0;
 let data;
 let activeSort;
 
+// Event listeners
 next.addEventListener("click", nextClick);
 prev.addEventListener("click", prevClick);
 searcher.addEventListener("input", updateValue);
+searchbtn_sm.addEventListener("click", searchButtonClicked);
+window.addEventListener("resize", menuVisibilization);
 
+// Fetch news articles from the API
 async function getNews() {
   articlesContainer.innerHTML = "";
   pagesDiv.innerHTML = "";
-  console.log(requestURL)
+  console.log(requestURL);
   let response = await fetch(requestURL);
   if (!response.ok) {
-    alert("Data unavailabel");
+    alert("Data unavailable");
     return false;
   }
   data = await response.json();
@@ -53,6 +69,8 @@ async function getNews() {
     generateUI(article12);
   }
 }
+
+// Event handler for next button click
 function nextClick(e) {
   let pages = document.querySelectorAll(".page");
   let active = document.querySelector(".pages .active");
@@ -78,6 +96,8 @@ function nextClick(e) {
   );
   generateUI(article12);
 }
+
+// Event handler for previous button click
 function prevClick(e) {
   let pages = document.querySelectorAll(".page");
   let active = document.querySelector(".pages .active");
@@ -104,6 +124,7 @@ function prevClick(e) {
   generateUI(article12);
 }
 
+// Generate the UI for the articles
 function generateUI(articles) {
   articlesContainer.innerHTML = "";
 
@@ -128,6 +149,7 @@ function generateUI(articles) {
   }
 }
 
+// Event handler for selecting a page
 function selectPage(e, pg) {
   let pages = document.querySelectorAll(".page");
   pages.forEach((page) => page.classList.remove("active"));
@@ -144,6 +166,8 @@ function selectPage(e, pg) {
     generateUI(article12);
   }
 }
+
+// Generate the pagination pages
 function generatePages(articlesL) {
   for (let i = 0; i < Math.floor(articlesL) / 12; i++) {
     let listItem = document.createElement("li");
@@ -156,6 +180,7 @@ function generatePages(articlesL) {
   }
 }
 
+// Event handler for selecting a category
 function selectCategory(e, category) {
   let options = document.querySelectorAll(".option");
   options.forEach((option) => option.classList.remove("active"));
@@ -163,10 +188,10 @@ function selectCategory(e, category) {
   e.target.classList.add("active");
   activeTab = e.target;
   activeCategory = category;
-  // console.log(activeCategory)
-  // console.log(activeTab)
   getNews();
 }
+
+// Generate the category options in the navigation menu
 function generateOptions() {
   for (let option of options) {
     let listItem = document.createElement("li");
@@ -181,6 +206,7 @@ function generateOptions() {
   activeCategory = "general";
 }
 
+// Generate the category options in the small menu
 function generateOptionsSmall() {
   for (let option of options) {
     let listItem = document.createElement("li");
@@ -191,10 +217,10 @@ function generateOptionsSmall() {
     `;
     optionsDivSmall.append(listItem);
   }
-  // activeTab = document.querySelectorAll(".mini-menu li button")[0];
-  // activeTab = document.querySelectorAll(".main-nav li button")[0];
   activeCategory = "general";
 }
+
+// Event handler for selecting a category in the small menu
 function selectCategorySmall(e, category) {
   let options = document.querySelectorAll(".sOption");
   options.forEach((option) => option.classList.remove("active"));
@@ -202,26 +228,23 @@ function selectCategorySmall(e, category) {
   e.target.classList.add("active");
   activeTab = e.target;
   activeCategory = category;
-  // console.log(activeCategory)
-  // console.log(activeTab)
   getNews();
 }
+
+// Initialize the app
 function init() {
   getNews();
   generateOptions();
   generateOptionsSmall();
 }
+
+// Initial setup when the window loads
 window.onload = () => {
   requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=general&apiKey=${apiKey}`;
   init();
 };
 
-//////////
-/////////
-// SEARCH
-
-console.log(searcher);
-
+// Event handler for updating the search value
 function updateValue(e) {
   let searchedText = e.target.value;
   searchedText = searchedText.toLowerCase();
@@ -266,67 +289,29 @@ function updateValue(e) {
   }
 }
 
-
-searchbtn_sm.addEventListener("click",searchButtonClicked);
-
-function searchButtonClicked(){
-  
-
-  if(searcher.style.display=="block"){
-    searcher.style.display="none"
-  }else{
-    searcher.style.display="block";
+// Event handler for the search button click in small screens
+function searchButtonClicked() {
+  if (searcher.style.display == "block") {
+    searcher.style.display = "none";
+  } else {
+    searcher.style.display = "block";
   }
 
-  if(optionsMinWinSize.matches && searchButtonWin.matches){
-    if(optionsDiv.style.display=="none"){
-      optionsDiv.style.display="flex";
-      
-    }else{
-      optionsDiv.style.display="none";
-      
+  if (optionsMinWinSize.matches && searchButtonWin.matches) {
+    if (optionsDiv.style.display == "none") {
+      optionsDiv.style.display = "flex";
+    } else {
+      optionsDiv.style.display = "none";
     }
-
   }
-  
 }
 
-
-
-
-
-
-
-
-
-
-
-// searchbtn_sm.addEventListener("click",(e)=>{
-//   if(searcher.style.display=="inline-block"){
-//     searcher.style.display="none"
-//   }else{
-//     searcher.style.display="inline-block";
-//     let nav_main = document.querySelector(".main-nav")
-//     nav_main.style.display="none"
-//   }
- 
-  
-  
-  
-
-
-// })
-
-//business entertainment general health science sports technology
-
-////////////////
-///////////////
-///// SORT
+// Event handler for sorting options
 function sortClick(e, sort) {
   const activeSort = document.querySelector(".sorting .active");
   const clickedButton = e.target;
-  console.log(activeSort)
-  console.log(clickedButton)
+  console.log(activeSort);
+  console.log(clickedButton);
 
   if (activeSort === clickedButton) {
     clickedButton.classList.remove("active");
@@ -339,8 +324,9 @@ function sortClick(e, sort) {
   getNews();
 }
 
+// Event handler for selecting sorting options
 const selectElement = document.getElementById("ahmed");
-  selectElement.addEventListener("change", function () {
+selectElement.addEventListener("change", function () {
   const selectedValue = this.value;
   const activeSort = document.querySelector(".sorting .active");
 
@@ -352,27 +338,17 @@ const selectElement = document.getElementById("ahmed");
   getNews();
 });
 
-
-
-
-///////
-//////
-//Window
-
-window.addEventListener('resize', menuVisibilization);
-
-function menuVisibilization(){
- 
-  if(minOptionWinSize.matches){
-    optionsDiv.style.display="flex"
-    searcher.style.display="block"
+// Function to handle menu visibility based on window size
+function menuVisibilization() {
+  if (minOptionWinSize.matches) {
+    optionsDiv.style.display = "flex";
+    searcher.style.display = "block";
   }
-  if(optionsMinWinSize.matches){
-    optionsDiv.style.display="flex"
-    searcher.style.display="none"
+  if (optionsMinWinSize.matches) {
+    optionsDiv.style.display = "flex";
+    searcher.style.display = "none";
   }
-  if(maxwidthMenu.matches){
-    optionsDiv.style.display="none"
+  if (maxwidthMenu.matches) {
+    optionsDiv.style.display = "none";
   }
-
 }
